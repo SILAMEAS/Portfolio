@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'nextjsdb',
-    synchronize: true,
+    synchronize: false,
     logging: true,
     entities: [Profile],
     ssl:true
