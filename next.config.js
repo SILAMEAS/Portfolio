@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {}
 
-module.exports = nextConfig
+module.exports = {
+    async headers() {
+        return [
+            {
+                source: '/(.*)',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'no-store', // Disable cache for this path
+                    },
+                ],
+            },
+        ]
+    },
+}
