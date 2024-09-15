@@ -2,7 +2,7 @@ import React from 'react';
 import TitleSection from "@/components/section/profile/pice/TitleSection";
 import DescriptionSection from "@/components/section/profile/pice/DescriptionSection";
 import CoupleButtonSection from "@/components/section/profile/pice/CoupleButtonSection";
-import {ProfileDto} from "@/db/dto/ProfileDto";
+import {ProfileDto} from "@/lib/dto/ProfileDto";
 import {Button} from "@/components/ui/button";
 
 const TitleDescriptionSection = ({profile}:{profile?: ProfileDto}) => {

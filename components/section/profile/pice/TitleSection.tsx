@@ -1,6 +1,6 @@
 import React from 'react';
 import {Edit} from "lucide-react";
-import {ProfileDto} from "@/db/dto/ProfileDto";
+import {ProfileDto} from "@/lib/dto/ProfileDto";
 import {useModal} from "@/hooks/store/use-modal-store";
 
 const TitleSection = ({profile}:{profile?: ProfileDto}) => {
@@ -14,7 +14,7 @@ const TitleSection = ({profile}:{profile?: ProfileDto}) => {
     />
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-red-500">
                       {" "}
-            {profile?.mainTile}
+            {profile?.mainTitle}
                         </span>
     </h1>
 };

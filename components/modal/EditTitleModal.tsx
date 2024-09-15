@@ -11,7 +11,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
 import qs from "query-string";
 import useGetProfile from "@/components/hooks/useGetProfile";
-import {ProfileDto} from "@/db/dto/ProfileDto";
+import {ProfileDto} from "@/lib/dto/ProfileDto";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -19,6 +19,14 @@ const formSchema = z.object({
     }).max(28, {
         message: "Title is too long",
     }),
+    mainTitle: z.string().min(1, {
+        message: "mainTitle is required",
+    }).max(28, {
+        message: "mainTitle is too long",
+    }),
+    description:z.string().min(1, {
+        message: "description is required",
+    })
 });
 const EditTitleModal = () => {
     const {type,isOpen,onClose,data,onOpen}=useModal();
@@ -27,6 +35,8 @@ const EditTitleModal = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: "",
+            mainTitle:"",
+            description:""
         },
     });
     const loading = form.formState.isSubmitting;
@@ -36,7 +46,7 @@ const EditTitleModal = () => {
     }
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
         const url=qs.stringifyUrl({
-            url:`/api/profiles/1`,
+            url:`${process.env.NEXT_PUBLIC_URL_GETWAY}/api/profile/1`,
         })
         const profile: ProfileDto = await axios.patch(url, value,{ headers: { 'Cache-Control': 'no-cache' }});
         onOpen('editTitle',{profile})
@@ -44,8 +54,10 @@ const EditTitleModal = () => {
         handleClose();
     };
     React.useEffect(()=>{
-        if(data.profile?.title){
-            form.setValue('title',data.profile.title)
+        if(data.profile){
+            form.setValue('title',data.profile.title);
+            form.setValue('mainTitle',data.profile.mainTitle);
+            form.setValue('description',data.profile.description)
         }
 
     },[data,form])
@@ -87,6 +99,58 @@ const EditTitleModal = () => {
                                     </FormItem>
                                 )}
                                 name={"title"}
+                            />
+                            <FormField
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel
+                                            className={
+                                                "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
+                                            }
+                                        >
+                                            Main Title
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                className={
+                                                    "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                                                }
+                                                placeholder={"Enter your title"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                                name={"mainTitle"}
+                            />
+                            <FormField
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel
+                                            className={
+                                                "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
+                                            }
+                                        >
+                                            Description
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                className={
+                                                    "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                                                }
+                                                placeholder={"Enter your title"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                                name={"description"}
                             />
                         </div>
                         <DialogFooter className={"bg-gray-100 px-6 py-4"}>

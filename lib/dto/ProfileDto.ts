@@ -1,6 +1,6 @@
 export interface ProfileDto{
     id:number;
     title:string;
-    mainTile:string;
+    mainTitle:string;
     description:string;
 }
