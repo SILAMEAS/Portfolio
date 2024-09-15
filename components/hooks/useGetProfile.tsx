@@ -8,8 +8,10 @@ const useGetProfile = () => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const { data } = useModal();
     const getData = async () => {
-        await axios.get('/api/profiles',{ headers: { 'Cache-Control': 'no-cache' }}).then((data)=>{
-            console.log('data',data)
+        await axios.get('/api/profiles',{
+            params: {
+                t: new Date().getTime()
+            }, headers: { 'Cache-Control': 'no-cache' }}).then((data)=>{
             const {id, ...res} = data.data[0];
             setProfile(res)
             setLoading(false);

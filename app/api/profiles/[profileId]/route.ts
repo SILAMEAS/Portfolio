@@ -19,7 +19,11 @@ export async function PATCH(  req: Request,
         } else {
             console.log("User not found");
         }
-        return NextResponse.json(profile);
+        const response = NextResponse.json(profile);
+        response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        response.headers.set('Expires', '0');
+        response.headers.set('Pragma', 'no-cache');
+        return response;
     } catch (error) {
         return NextResponse.error();
     }
