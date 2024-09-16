@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,18 +19,19 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.441.0",
     "next": "14.0.1",
+    "next-themes": "^0.3.0",
     "pg": "^8.12.0",
     "query-string": "^9.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "reflect-metadata": "^0.2.2",
+    "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "typeorm": "^0.3.20",
     "zod": "^3.23.8",
-    "zustand": "^4.5.5",
-    "next-themes": "^0.3.0"
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/node": "^20.16.5",

@@ -10,8 +10,9 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
 import qs from "query-string";
-import useGetProfile from "@/components/hooks/useGetProfile";
 import {ProfileDto} from "@/lib/dto/ProfileDto";
+import {toast} from "sonner";
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -26,6 +27,12 @@ const formSchema = z.object({
     }),
     description:z.string().min(1, {
         message: "description is required",
+    }),
+    label:z.string().min(1, {
+        message: "label is required",
+    }),
+    mainLabel:z.string().min(1, {
+        message: "mainLabel is required",
     })
 });
 const EditTitleModal = () => {
@@ -36,7 +43,9 @@ const EditTitleModal = () => {
         defaultValues: {
             title: "",
             mainTitle:"",
-            description:""
+            description:"",
+            label:"",
+            mainLabel:""
         },
     });
     const loading = form.formState.isSubmitting;
@@ -52,28 +61,86 @@ const EditTitleModal = () => {
         onOpen('editTitle',{profile})
         form.reset();
         handleClose();
+        // toast("Information has been updated.")
     };
     React.useEffect(()=>{
         if(data.profile){
             form.setValue('title',data.profile.title);
             form.setValue('mainTitle',data.profile.mainTitle);
             form.setValue('description',data.profile.description)
+            form.setValue('label',data.profile.label);
+            form.setValue('mainLabel',data.profile.mainLabel)
         }
 
     },[data,form])
 
     return (
-        <Dialog open={isModalOpen} onOpenChange={handleClose}>
+        <Dialog open={false} onOpenChange={handleClose}>
             <DialogContent className={"bg-white text-black p-0 overflow-hidden"}>
                 <DialogHeader className={"py-8 px-6"}>
                     <DialogTitle className={"text-2xl text-center font-bold"}>
-                        Customize your Title
+                        Customize your Profile
                     </DialogTitle>
 
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className={"space-y-8 px-6"}>
+                            {/** label **/}
+                            <FormField
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel
+                                            className={
+                                                "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
+                                            }
+                                        >
+                                            Label
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                className={
+                                                    "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                                                }
+                                                placeholder={"Enter your title"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                                name={"label"}
+                            />
+                            {/** main label **/}
+                            <FormField
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel
+                                            className={
+                                                "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
+                                            }
+                                        >
+                                            Main Label
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                className={
+                                                    "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                                                }
+                                                placeholder={"Enter your title"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                                name={"mainLabel"}
+                            />
+                            {/** title **/}
                             <FormField
                                 control={form.control}
                                 render={({ field }) => (
@@ -100,6 +167,7 @@ const EditTitleModal = () => {
                                 )}
                                 name={"title"}
                             />
+                            {/** main label **/}
                             <FormField
                                 control={form.control}
                                 render={({ field }) => (
@@ -126,6 +194,7 @@ const EditTitleModal = () => {
                                 )}
                                 name={"mainTitle"}
                             />
+                            {/** description **/}
                             <FormField
                                 control={form.control}
                                 render={({ field }) => (
