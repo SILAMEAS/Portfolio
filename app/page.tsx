@@ -6,7 +6,7 @@ import BgProfile from "@/components/section/profile/pice/BgProfile";
 
 export default function Home() {
     return (
-        <main className="w-screen h-screen relative overflow-hidden">
+        <main className="w-full h-full relative overflow-hidden">
             {/** background profile **/}
             <BgProfile/>
             {/** horse on cliff **/}
