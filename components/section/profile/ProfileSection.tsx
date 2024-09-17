@@ -10,7 +10,7 @@ const ProfileSection = () => {
     const {setData}=useProfile();
     React.useEffect(()=>{
         setData({profile})
-    },[profile])
+    },[profile, setData])
     return <div className={'absolute top-36 md:top-48 lg:top-40 '}>
         {
             (isLoading || !profile) ? <Loading className={'p-0 md:pl-20'}/> : <div className={''}>

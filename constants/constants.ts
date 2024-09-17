@@ -135,6 +135,7 @@ export const Socials = [
     url: "https://www.instagram.com/nex_axois?igsh=MWc2aXZ0ZWVqdThoMA%3D%3D&utm_source=qr",
   },
 ];
+
 export const Projects = [
   {
     title: "Static Website HTML/CSS/JS",
