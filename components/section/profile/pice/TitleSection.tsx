@@ -16,6 +16,7 @@ const TitleSection = ({profile}:{profile?: ProfileDto}) => {
                 "text-zinc-300 inline z-100 cursor-pointer ml-[10px]"
             }
         />
+        {/*<ToggleThem/>*/}
     </h1>
 };
 

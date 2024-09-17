@@ -175,7 +175,7 @@ export const Projects = [
   },
   {
     title: "Best Configruration Nestjs-TypeOrm",
-    text: "swagger/authentication/handleManyRequest/pagination",
+    text: "swagger authentication handleManyRequest pagination",
     src: "/typeorm-nest.jpg",
     url: "https://nest-typeorm-auth-pagination.onrender.com/api",
   },
