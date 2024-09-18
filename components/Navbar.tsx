@@ -7,14 +7,15 @@ import {Loading} from "@/components/Loading";
 import {Skeleton} from "@/components/ui/skeleton";
 import useApiGetProfile from "@/components/hooks/profile/useApiGetProfile";
 import React from "react";
+import {useModal} from "@/hooks/store/use-modal-store";
 
 const Navbar = () => {
     const {profile,isLoading}=useApiGetProfile();
-    const {setData}=useProfile();
-    const {data}=useProfile();
+    const {data,setData}=useProfile();
+    const {data:dataModal}=useModal();
     React.useEffect(()=>{
         setData({profile})
-    },[profile, setData])
+    },[profile, setData,dataModal.profile])
   return (
     <div className="fixed top-0 z-[40] w-full h-[100px] bg-transparent flex justify-between items-center px-5 md:px-20">
       <div className="flex flex-row gap-3 items-center">
