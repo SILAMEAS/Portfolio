@@ -1,5 +1,7 @@
 import React from 'react';
 import Image from "next/image";
+import {Edit2Icon, Eye, Github, Play} from "lucide-react";
+import {TbEyeStar} from "react-icons/tb";
 
 interface ImageProjectEntity{
     public_id:string;
@@ -12,18 +14,17 @@ export interface ICardProject {
     link: string,
     image: ImageProjectEntity,
 }
-const CardProject = ({description,
+const ProjectFaceCard = ({description,
                           link,
                          image,
                          title='title'}:ICardProject) => {
     return <>
         {/* component */}
-        <div className="card bg-[#15263F] w-80 h-[22rem] rounded-xl p-6 space-y-4 flex flex-col justify-between">
-            <Image src={image.url} alt={"project_image"}  width={300} height={200}/>
+        <div
+            className="card bg-[#15263F] w-80 h-[25rem] rounded-xl p-6 space-y-4 flex flex-col justify-between items-center">
+            <Image src={image.url} alt={"project_image"} width={200} height={200}/>
             <div id="description" className="space-y-4">
-                <p className="text-slate-500 text-sm select-none">
-                    {description}
-                </p>
+                <p className="text-slate-500 text-sm select-none">{description}</p>
                 <div className="flex items-center justify-between font-semibold text-sm border-b border-slate-500 pb-6">
         <span
             id="price"
@@ -44,8 +45,12 @@ const CardProject = ({description,
              </a>
         </span>
                 </div>
+                <div className={'flex justify-evenly w-full pb-52'}>
+                    <Github className={'text-white h-5 w-5 '}/>
+                    <Eye className={'text-white h-5 w-5 '}/>
+                </div>
             </div>
         </div>
     </>
 }
-export default CardProject
+export default ProjectFaceCard

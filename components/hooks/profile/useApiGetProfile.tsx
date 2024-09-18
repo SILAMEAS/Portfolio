@@ -3,7 +3,7 @@ import {ProfileDto} from "@/lib/dto/ProfileDto";
 import axios from "axios";
 import {useModal} from "@/hooks/store/use-modal-store";
 
-const useGetProfile = () => {
+const useApiGetProfile = () => {
     const [profile, setProfile] = useState<ProfileDto | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const {data}=useModal();
@@ -22,7 +22,8 @@ const useGetProfile = () => {
             getProfile().then(r => r)
         }
     }, [data.profile]);
+
     return {profile,isLoading}
 };
 
-export default useGetProfile;
+export default useApiGetProfile;

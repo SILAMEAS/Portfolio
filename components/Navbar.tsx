@@ -5,10 +5,16 @@ import Link from "next/link";
 import {useProfile} from "@/hooks/store/use-profile-store";
 import {Loading} from "@/components/Loading";
 import {Skeleton} from "@/components/ui/skeleton";
+import useApiGetProfile from "@/components/hooks/profile/useApiGetProfile";
+import React from "react";
 
 const Navbar = () => {
+    const {profile,isLoading}=useApiGetProfile();
+    const {setData}=useProfile();
     const {data}=useProfile();
-    console.log('title',data?.profile)
+    React.useEffect(()=>{
+        setData({profile})
+    },[profile, setData])
   return (
     <div className="fixed top-0 z-[40] w-full h-[100px] bg-transparent flex justify-between items-center px-5 md:px-20">
       <div className="flex flex-row gap-3 items-center">

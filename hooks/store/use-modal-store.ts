@@ -1,5 +1,6 @@
 import {create} from "zustand";
 import {ProfileDto} from "@/lib/dto/ProfileDto";
+import {ProjectDto} from "@/lib/dto/ProjectDto";
 
 export type ModalType =
     | "editTitle"

@@ -4,26 +4,13 @@ import {useModal} from "@/hooks/store/use-modal-store";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {z} from "zod";
-import axios from "axios";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import qs from "query-string";
-import {ProfileDto} from "@/lib/dto/ProfileDto";
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
-import {Label} from "@/components/ui/label";
+import {Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle,} from "@/components/ui/sheet"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {DialogFooter} from "@/components/ui/dialog";
 import {Loading} from "@/components/Loading";
 import {Textarea} from "@/components/ui/textarea";
+import {useApiUpdateProfile} from "@/components/hooks/profile/useApiUpdateProfile";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -47,7 +34,8 @@ const formSchema = z.object({
     })
 });
 const EditTitleSheet = () => {
-    const {type,isOpen,onClose,data,onOpen}=useModal();
+    const {type,isOpen,onClose,data}=useModal();
+    const {updateProfile}=useApiUpdateProfile();
     const isModalOpen=isOpen&&type==='editTitle';
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -65,14 +53,9 @@ const EditTitleSheet = () => {
         onClose()
     }
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        const url=qs.stringifyUrl({
-            url:`${process.env.NEXT_PUBLIC_URL_GETWAY}/api/profile/1`,
-        })
-        const profile: ProfileDto = await axios.patch(url, value,{ headers: { 'Cache-Control': 'no-cache' }});
-        onOpen('editTitle',{profile})
+        await updateProfile(value);
         form.reset();
         handleClose();
-        // toast("Information has been updated.")
     };
     React.useEffect(()=>{
         if(data.profile){
@@ -86,7 +69,7 @@ const EditTitleSheet = () => {
     },[data,form])
 
     return (
-        <Sheet open={isOpen} onOpenChange={onClose}>
+        <Sheet open={isModalOpen} onOpenChange={onClose}>
             <SheetContent>
                 <SheetHeader>
                     <SheetTitle>Customize Home</SheetTitle>
