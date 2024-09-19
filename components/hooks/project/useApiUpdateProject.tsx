@@ -13,7 +13,7 @@ export const useApiUpdateProject=()=>{
                url:`${process.env.NEXT_PUBLIC_URL_GETWAY}/api/profile/1`,
            })
            const profile: ProfileDto = await axios.patch(url, value,{ headers: { 'Cache-Control': 'no-cache' }});
-           onOpen('editTitle',{profile})
+           onOpen('modify-profile',{profile})
        }catch (e){
            console.log('update profile failed',e)
        }

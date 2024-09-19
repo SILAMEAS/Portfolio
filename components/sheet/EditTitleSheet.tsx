@@ -36,7 +36,7 @@ const formSchema = z.object({
 const EditTitleSheet = () => {
     const {type,isOpen,onClose,data}=useModal();
     const {updateProfile}=useApiUpdateProfile();
-    const isModalOpen=isOpen&&type==='editTitle';
+    const isModalOpen=isOpen&&type==='modify-profile';
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {

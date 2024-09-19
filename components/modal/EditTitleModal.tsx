@@ -37,7 +37,7 @@ const formSchema = z.object({
 });
 const EditTitleModal = () => {
     const {type,isOpen,onClose,data,onOpen}=useModal();
-    const isModalOpen=isOpen&&type==='editTitle';
+    const isModalOpen=isOpen&&type==='modify-profile';
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -58,7 +58,7 @@ const EditTitleModal = () => {
             url:`${process.env.NEXT_PUBLIC_URL_GETWAY}/api/profile/1`,
         })
         const profile: ProfileDto = await axios.patch(url, value,{ headers: { 'Cache-Control': 'no-cache' }});
-        onOpen('editTitle',{profile})
+        onOpen('modify-profile',{profile})
         form.reset();
         handleClose();
         // toast("Information has been updated.")

@@ -1,10 +1,10 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+import {useState} from "react";
 import "../../app/globals.css";
 import {ProjectDto} from "@/lib/dto/ProjectDto";
 import ProjectFaceCard from "@/components/card/project-face-card";
-import ProjectBackCard from "@/components/card/project-back-card"; // Create a separate CSS file for the flip animation
+import ProjectBackCard from "@/components/card/project-back-card";
+
 const ProjectCard = (props: ProjectDto) => {
     const [flipped, setFlipped] = useState(false);
 
@@ -12,16 +12,19 @@ const ProjectCard = (props: ProjectDto) => {
         setFlipped(!flipped);
     };
   return (
-      <div className="flip-container transition-all animate-pulse" onClick={handleFlip}>
+      <div className="flip-container transition-all" onClick={handleFlip}>
           <div className={`flip-card ${flipped ? "flipped" : ""}`}>
               {/* Front of the card */}
-              <div className="flip-card-front">
-                 <ProjectFaceCard {...props}/>
+              <div className="flip-card-front animate-pulse">
+                  <ProjectFaceCard {...props}/>
+                  {/*<div onClick={handleFlip} className={'absolute top-[10px] right-[-15px]'}>{'description'}</div>*/}
               </div>
 
               {/* Back of the card */}
-              <div className="flip-card-back">
+              <div className="flip-card-back ">
                   <ProjectBackCard {...props}/>
+                  {/*<div onClick={handleFlip} className={'absolute top-[10px] right-[-15px]'}><TbSwipe*/}
+                  {/*    className={'h-10 w-10'}/></div>*/}
               </div>
           </div>
       </div>

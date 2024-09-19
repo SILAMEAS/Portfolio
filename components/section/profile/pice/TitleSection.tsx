@@ -11,7 +11,7 @@ const TitleSection = ({profile}:{profile?: ProfileDto}) => {
             {` ${profile?.mainTitle}`}
                         </span>
         <Edit
-            onClick={() => onOpen('editTitle', {profile})}
+            onClick={() => onOpen('modify-profile', {profile})}
             className={
                 "text-zinc-300 inline z-100 cursor-pointer ml-[10px]"
             }

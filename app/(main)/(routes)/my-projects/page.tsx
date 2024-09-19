@@ -1,11 +1,9 @@
 "use client";
 
-import {Projects} from '@/constants/constants';
 import ProjectCard from "@/components/card/ProjectCard";
-import ProjectFaceCard from "@/components/card/project-face-card";
 import useApiGetProject from "@/components/hooks/project/useApiGetProject";
-import {Edit2Icon} from "lucide-react";
 import React from "react";
+import AddProjectCard from "@/components/card/add-project-card";
 
 const Page = () => {
   const {project}=useApiGetProject();
@@ -16,12 +14,16 @@ const Page = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[90%] max-h-[70%] overflow-y-auto">
         {project.map((project, index) => (
-         <div  key={project.link} className={'flex flex-col'}>
-           <ProjectCard
-               {...project}
-           />
-         </div>
+            <div key={project.link} className={'flex flex-col'}>
+              <ProjectCard
+                  {...project}
+              />
+            </div>
         ))}
+        {
+          project.length>0&& <AddProjectCard/>
+        }
+
       </div>
     </div>
   );
