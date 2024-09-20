@@ -1,6 +1,7 @@
 "use client";
 import {useEffect, useState} from "react";
 import EditTitleSheet from "@/components/sheet/EditTitleSheet";
+import ModifyProjectModal from "@/components/modal/ModifyProjectModal";
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -13,7 +14,7 @@ export const ModalProvider = () => {
     return (
         <>
             <EditTitleSheet/>
-            {/*<EditTitleModal />*/}
+            <ModifyProjectModal/>
         </>
     );
 };

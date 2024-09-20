@@ -7,6 +7,7 @@ import AddProjectCard from "@/components/card/add-project-card";
 
 const Page = () => {
   const {project}=useApiGetProject();
+  console.log('project',project)
   return (
     <div
       style={{ backgroundImage: "url(/bg-3.jpg)" }}
@@ -21,9 +22,8 @@ const Page = () => {
             </div>
         ))}
         {
-          project.length>0&& <AddProjectCard/>
+          (project.length >=0)&& <AddProjectCard/>
         }
-
       </div>
     </div>
   );
