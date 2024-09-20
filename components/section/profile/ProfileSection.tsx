@@ -1,9 +1,8 @@
 "use client"
 import React from 'react';
-import {Loading} from "@/components/Loading";
-import useApiGetProfile from "@/components/hooks/profile/useApiGetProfile";
-import TitleDescriptionSection from "@/components/section/profile/pice/TitleDescriptionSection";
 import {useProfile} from "@/hooks/store/use-profile-store";
+import {Loading} from "../../Loading";
+import TitleDescriptionSection from "./pice/TitleDescriptionSection";
 
 const ProfileSection = () => {
     const {data}=useProfile();

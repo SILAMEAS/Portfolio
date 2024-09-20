@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
-import {useModal} from "@/hooks/store/use-modal-store";
-import {ProjectDto} from "@/lib/dto/ProjectDto";
+import {ProjectDto} from "../../../lib/dto/ProjectDto";
+import {useModal} from "../../../hooks/store/use-modal-store";
+
 
 const useApiGetProject = () => {
     const [project, setProject] = useState<Array<ProjectDto> | []>([]);

@@ -1,13 +1,16 @@
 "use client";
 
-import ProjectCard from "@/components/card/ProjectCard";
-import useApiGetProject from "@/components/hooks/project/useApiGetProject";
 import React from "react";
-import AddProjectCard from "@/components/card/add-project-card";
+import useApiGetProject from "../../../../components/hooks/project/useApiGetProject";
+import ProjectCard from "../../../../components/card/ProjectCard";
+import AddProjectCard from "../../../../components/card/add-project-card";
+import {useGetAllProductQuery} from "@/redux/apiSlice";
 
 const Page = () => {
   const {project}=useApiGetProject();
-  console.log('project',project)
+  console.log('project',project);
+  const ge=useGetAllProductQuery({});
+  console.log('ge',ge)
   return (
     <div
       style={{ backgroundImage: "url(/bg-3.jpg)" }}

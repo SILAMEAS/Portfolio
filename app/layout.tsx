@@ -7,7 +7,7 @@ import {ModalProvider} from "@/components/providers/modal-provider";
 import {ThemeProvider} from "@/components/providers/theme-provider";
 import {Toaster} from "@/components/ui/sonner";
 import React from "react";
-
+import App from "@/app/App";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function RootLayout({
       >
       <ModalProvider/>
         <Navbar />
-        {children}
+          <App> {children}</App>
           <Toaster />
         <Navigation />
       </ThemeProvider>
