@@ -30,11 +30,13 @@ export default function RootLayout({
           disableTransitionOnChange
           storageKey={"discord-theme"}
       >
-      <ModalProvider/>
+          <App>
+              <ModalProvider/>
         <Navbar />
-          <App> {children}</App>
+          {children}
           <Toaster />
         <Navigation />
+          </App>
       </ThemeProvider>
         </body>
     </html>

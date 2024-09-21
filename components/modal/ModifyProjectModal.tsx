@@ -1,15 +1,15 @@
 "use client";
 import React, {useState} from "react";
-import {useModal} from "@/hooks/store/use-modal-store";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
 import {z} from "zod";
-import axios from "axios";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
-import qs from "query-string";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks";
+import {onClose} from "@/redux/slices/modalSlice";
+import {useCreateProjectMutation} from "@/redux/feature/projectSlice";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -25,9 +25,11 @@ const formSchema = z.object({
     })
 });
 const ModifyProjectModal = () => {
-    const {type,isOpen,onClose}=useModal();
+    const {modal:{isOpen,type}}=useAppSelector(state=>state);
+    const dispatch=useAppDispatch();
+    const [createProject,resultCreateProject]=useCreateProjectMutation();
     const [file, setFile] = useState<File | null>(null);
-    const isModalOpen=isOpen&&type==='modify-project';
+    const isModalOpen=isOpen&&type==='create-project';
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -39,20 +41,15 @@ const ModifyProjectModal = () => {
     const loading = form.formState.isSubmitting;
     const handleClose=()=>{
         form.reset();
-        onClose()
-    }
+        dispatch(onClose())}
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if(file)
             setFile(file)
 
-        console.log('file',file)
     };
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        const url=qs.stringifyUrl({
-            url:`${process.env.NEXT_PUBLIC_URL_GETWAY}/api/project`,
-        })
         if(!file){
             console.error('file missing')
             return
@@ -64,10 +61,9 @@ const ModifyProjectModal = () => {
         formData.append('image', file);
 
         try {
-            const response = await axios.post(url, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            console.log("Upload successful", response.data.response.data.message);
+            await createProject(formData).unwrap();
+            form.reset();
+            handleClose();
         } catch (error) {
             console.error("Upload error", error);
         }

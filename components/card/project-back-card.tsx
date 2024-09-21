@@ -1,17 +1,7 @@
 import React from 'react';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
-import {Input} from "@/components/ui/input"
-import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardDescription, CardHeader,} from "@/components/ui/card"
 import {ProjectDto} from "@/lib/dto/ProjectDto";
 import {z} from "zod";
-import {useModal} from "@/hooks/store/use-modal-store";
-import {useApiUpdateProfile} from "@/components/hooks/profile/useApiUpdateProfile";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Textarea} from "@/components/ui/textarea";
-import {SheetFooter} from "@/components/ui/sheet";
-import {Loading} from "@/components/Loading";
 
 const formSchema = z.object({
     title: z.string().min(1, {

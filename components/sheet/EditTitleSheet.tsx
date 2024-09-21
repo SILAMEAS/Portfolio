@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import {useModal} from "@/hooks/store/use-modal-store";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {z} from "zod";
@@ -10,7 +9,9 @@ import {Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTi
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Loading} from "@/components/Loading";
 import {Textarea} from "@/components/ui/textarea";
-import {useApiUpdateProfile} from "@/components/hooks/profile/useApiUpdateProfile";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks";
+import {onClose} from "@/redux/slices/modalSlice";
+import {useUpdateProfileMutation} from "@/redux/feature/profileSlice";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -34,9 +35,10 @@ const formSchema = z.object({
     })
 });
 const EditTitleSheet = () => {
-    const {type,isOpen,onClose,data}=useModal();
-    const {updateProfile}=useApiUpdateProfile();
+    const {modal:{isOpen,data,type}}=useAppSelector(state=>state);
+    const dispatch=useAppDispatch();
     const isModalOpen=isOpen&&type==='modify-profile';
+    const [updateProfile]=useUpdateProfileMutation();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -50,12 +52,15 @@ const EditTitleSheet = () => {
     const loading = form.formState.isSubmitting;
     const handleClose=()=>{
         form.reset();
-        onClose()
-    }
+        dispatch(onClose())}
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        await updateProfile(value);
-        form.reset();
-        handleClose();
+        try {
+            data?.profile?.id&& await updateProfile({...value,id:data.profile.id}).unwrap();
+            form.reset();
+            handleClose();
+        }catch (e){
+            console.error(e);
+        }
     };
     React.useEffect(()=>{
         if(data.profile){
@@ -69,7 +74,7 @@ const EditTitleSheet = () => {
     },[data,form])
 
     return (
-        <Sheet open={isModalOpen} onOpenChange={onClose}>
+        <Sheet open={isModalOpen} onOpenChange={handleClose}>
             <SheetContent>
                 <SheetHeader>
                     <SheetTitle>Customize Home</SheetTitle>
