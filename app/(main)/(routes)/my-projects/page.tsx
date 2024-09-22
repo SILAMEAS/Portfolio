@@ -10,9 +10,13 @@ const Page = () => {
   return (
     <div
       style={{ backgroundImage: "url(/bg-3.jpg)" }}
-      className="w-screen h-screen flex items-center justify-center bg-center bg-cover"
+      className=" w-screen h-screen flex flex-col items-start justify-center bg-center bg-cover"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[90%] max-h-[80%] overflow-hidden overflow-y-scroll scrollbar scrollbar-thumb-muted">
+      <div className={'mt-14 mb-4 flex self-end w-full px-5 items-center justify-between'}>
+        <p className={'text-red-600'}>{getProjects?.currentData?.length} projects</p>
+        <AddProjectCard/>
+      </div>
+      <div className=" w-full max-h-[70%] overflow-hidden overflow-y-auto scrollbar scrollbar-thumb-muted grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 px-5">
         {(getProjects.isLoading||!getProjects.currentData)?<div>loading...</div>:
           getProjects?.currentData?.map((project) => (
               <ProjectCard
@@ -20,7 +24,7 @@ const Page = () => {
                   {...project}
               />
         ))}
-        <AddProjectCard/>
+
       </div>
     </div>
   );

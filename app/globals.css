@@ -28,8 +28,8 @@ body {
 
 .flip-card {
   position: relative;
-  width: 300px;
-  height: 400px;
+  width: auto;
+  height: 150px;
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }

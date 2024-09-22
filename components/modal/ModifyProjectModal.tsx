@@ -11,11 +11,12 @@ import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {onClose} from "@/redux/slices/modalSlice";
 import {useCreateProjectMutation, useUpdateProjectMutation} from "@/redux/feature/projectSlice";
 import Image from "next/image";
+import {Loading} from "@/components/Loading";
 
 const formSchema = z.object({
     title: z.string().min(1, {
         message: "Title is required",
-    }).max(28, {
+    }).max(40, {
         message: "Title is too long",
     }),
     description:z.string().min(1, {
@@ -79,7 +80,7 @@ const ModifyProjectModal = () => {
     },[data.project,form])
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
-            <DialogContent className={"bg-black text-black p-0 overflow-hidden"}>
+            <DialogContent className={"bg-black text-black p-0 overflow-hidden "}>
                 <DialogHeader className={"py-8 px-6"}>
                     <DialogTitle className={"text-2xl text-center font-bold text-white"}>
                         Modify Project
@@ -88,7 +89,7 @@ const ModifyProjectModal = () => {
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className={"space-y-8 px-6"}>
+                        <div className={"space-y-8 px-6 max-h-[30rem] overflow-y-auto"}>
                             {/** label **/}
                             <FormField
                                 control={form.control}
@@ -196,7 +197,7 @@ const ModifyProjectModal = () => {
                         <DialogFooter className={"bg-inherit px-6 py-4"}>
                             <Button disabled={loading} variant={"default"} type={"submit"}>
                                 {
-                                    loading?"loading ...":"Update Project"
+                                    loading?<Loading/>:"Update Project"
                                 }
                             </Button>
                         </DialogFooter>

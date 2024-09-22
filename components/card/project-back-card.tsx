@@ -22,12 +22,12 @@ const formSchema = z.object({
         message: "link is required",
     })
 });
-const ProjectBackCard = ({description,onClick}:ICardProject) => {
+const ProjectBackCard = ({description,title,onClick}:ICardProject) => {
 
     return (
-        <Card className="w-70 h-[25rem] overflow-y-auto" onClick={onClick}>
+        <Card className="w-70 h-auto overflow-y-auto" onClick={onClick}>
             <CardHeader>
-                <CardDescription>Description Detail</CardDescription>
+                <CardDescription>{title}</CardDescription>
             </CardHeader>
             <CardContent>
                 {description}

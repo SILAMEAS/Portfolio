@@ -12,10 +12,10 @@ const ProjectCard = (props: ProjectDto) => {
         setFlipped(!flipped);
     };
   return (
-      <div className="flip-container transition-all" >
+      <div className="flip-container transition-all w-auto" >
           <div className={`flip-card ${flipped ? "flipped" : ""}`}>
               {/* Front of the card */}
-              <div className="flip-card-front ">
+              <div className="flip-card-front">
                   <ProjectFaceCard {...props} onClick={handleFlip}/>
               </div>
 

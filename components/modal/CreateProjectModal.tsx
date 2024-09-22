@@ -11,11 +11,12 @@ import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {onClose} from "@/redux/slices/modalSlice";
 import {useCreateProjectMutation} from "@/redux/feature/projectSlice";
 import Image from "next/image";
+import {Loading} from "@/components/Loading";
 
 const formSchema = z.object({
     title: z.string().min(1, {
         message: "Title is required",
-    }).max(28, {
+    }).max(40, {
         message: "Title is too long",
     }),
     description:z.string().min(1, {
@@ -42,6 +43,7 @@ const CreateProjectModal = () => {
     const loading = form.formState.isSubmitting;
     const handleClose=()=>{
         form.reset();
+        setFile(null);
         dispatch(onClose())}
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +83,7 @@ const CreateProjectModal = () => {
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className={"space-y-8 px-6"}>
+                        <div className={"space-y-8 px-6 max-h-[30rem] overflow-y-auto"}>
                             {/** label **/}
                             <FormField
                                 control={form.control}
@@ -119,7 +121,7 @@ const CreateProjectModal = () => {
                                                 "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
                                             }
                                         >
-                                            Main Label
+                                            description
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -146,7 +148,7 @@ const CreateProjectModal = () => {
                                                 "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
                                             }
                                         >
-                                            Title
+                                            link
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -178,14 +180,14 @@ const CreateProjectModal = () => {
                                 </FormControl>
                                 <FormMessage />
                                 {
-                                    file&& <Image src={URL.createObjectURL(file)} alt={"sdfdsf"} width={200} height={200}/>
+                                    file&& <Image src={URL.createObjectURL(file)} alt={"file"} width={200} height={200}/>
                                 }
                             </FormItem>
                         </div>
                         <DialogFooter className={"bg-inherit px-6 py-4"}>
                             <Button disabled={loading||!file} variant={"default"} type={"submit"}>
                                 {
-                                    loading?"loading ...":"Create Project"
+                                    loading?<Loading/>:"Create Project"
                                 }
                             </Button>
                         </DialogFooter>
