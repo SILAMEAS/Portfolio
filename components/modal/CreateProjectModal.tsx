@@ -9,7 +9,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {onClose} from "@/redux/slices/modalSlice";
-import {useCreateProjectMutation, useUpdateProjectMutation} from "@/redux/feature/projectSlice";
+import {useCreateProjectMutation} from "@/redux/feature/projectSlice";
 import Image from "next/image";
 
 const formSchema = z.object({
@@ -25,12 +25,12 @@ const formSchema = z.object({
         message: "link is required",
     })
 });
-const ModifyProjectModal = () => {
-    const {modal:{isOpen,type,data}}=useAppSelector(state=>state);
+const CreateProjectModal = () => {
+    const {modal:{isOpen,type}}=useAppSelector(state=>state);
     const dispatch=useAppDispatch();
-    const [updateProject,res]=useUpdateProjectMutation();
+    const [createProject,resultCreateProject]=useCreateProjectMutation();
     const [file, setFile] = useState<File | null>(null);
-    const isModalOpen=isOpen&&type==='modify-project';
+    const isModalOpen=isOpen&&type==='create-project';
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -42,7 +42,6 @@ const ModifyProjectModal = () => {
     const loading = form.formState.isSubmitting;
     const handleClose=()=>{
         form.reset();
-        setFile(null);
         dispatch(onClose())}
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,16 +51,18 @@ const ModifyProjectModal = () => {
 
     };
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-
+        if(!file){
+            console.error('file missing')
+            return
+        }
         const formData=new FormData();
         formData.append('title',value.title);
         formData.append('description',value.description);
         formData.append('link',value.link);
-        if(file){
-            formData.append('image', file);
-        }
+        formData.append('image', file);
+
         try {
-            await updateProject({body:formData,id:data?.project?.id??0}).unwrap();
+            await createProject(formData).unwrap();
             form.reset();
             handleClose();
         } catch (error) {
@@ -69,20 +70,12 @@ const ModifyProjectModal = () => {
         }
 
     };
-    React.useEffect(()=>{
-        if(data.project){
-            form.setValue('title',data.project?.title??'');
-            form.setValue('description',data.project?.description??"")
-            form.setValue('link',data.project?.link??"");
-        }
-
-    },[data.project,form])
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className={"bg-black text-black p-0 overflow-hidden"}>
                 <DialogHeader className={"py-8 px-6"}>
                     <DialogTitle className={"text-2xl text-center font-bold text-white"}>
-                        Modify Project
+                        Add New Project
                     </DialogTitle>
 
                 </DialogHeader>
@@ -126,7 +119,7 @@ const ModifyProjectModal = () => {
                                                 "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
                                             }
                                         >
-                                            description
+                                            Main Label
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -153,7 +146,7 @@ const ModifyProjectModal = () => {
                                                 "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/700"
                                             }
                                         >
-                                            link
+                                            Title
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -185,18 +178,14 @@ const ModifyProjectModal = () => {
                                 </FormControl>
                                 <FormMessage />
                                 {
-                                    (file)&& <Image src={URL.createObjectURL(file)} alt={"file"} width={200} height={200}/>
-                                }
-                                {
-                                    (data?.project?.image.url&&!file)&& <Image src={data?.project?.image.url} alt={"imageUrl"} width={200} height={200}/>
+                                    file&& <Image src={URL.createObjectURL(file)} alt={"sdfdsf"} width={200} height={200}/>
                                 }
                             </FormItem>
-
                         </div>
                         <DialogFooter className={"bg-inherit px-6 py-4"}>
-                            <Button disabled={loading} variant={"default"} type={"submit"}>
+                            <Button disabled={loading||!file} variant={"default"} type={"submit"}>
                                 {
-                                    loading?"loading ...":"Update Project"
+                                    loading?"loading ...":"Create Project"
                                 }
                             </Button>
                         </DialogFooter>
@@ -207,5 +196,5 @@ const ModifyProjectModal = () => {
     );
 };
 
-export default ModifyProjectModal;
+export default CreateProjectModal;
 

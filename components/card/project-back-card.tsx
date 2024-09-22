@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, CardContent, CardDescription, CardHeader,} from "@/components/ui/card"
 import {ProjectDto} from "@/lib/dto/ProjectDto";
 import {z} from "zod";
+import {ICardProject} from "@/components/card/project-face-card";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -21,13 +22,10 @@ const formSchema = z.object({
         message: "link is required",
     })
 });
-const ProjectBackCard = ({description,
-                          link,
-                         image,
-                         title='title'}:ProjectDto) => {
+const ProjectBackCard = ({description,onClick}:ICardProject) => {
 
     return (
-        <Card className="w-70 h-[25rem] overflow-y-auto">
+        <Card className="w-70 h-[25rem] overflow-y-auto" onClick={onClick}>
             <CardHeader>
                 <CardDescription>Description Detail</CardDescription>
             </CardHeader>

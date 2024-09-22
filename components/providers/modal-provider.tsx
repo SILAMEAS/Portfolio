@@ -2,6 +2,7 @@
 import {useEffect, useState} from "react";
 import EditTitleSheet from "@/components/sheet/EditTitleSheet";
 import ModifyProjectModal from "@/components/modal/ModifyProjectModal";
+import CreateProjectModal from "@/components/modal/CreateProjectModal";
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -15,6 +16,7 @@ export const ModalProvider = () => {
         <>
             <EditTitleSheet/>
             <ModifyProjectModal/>
+            <CreateProjectModal/>
         </>
     );
 };

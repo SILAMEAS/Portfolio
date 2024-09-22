@@ -26,7 +26,15 @@ export const projectSlice = createApi({
             }),
             invalidatesTags: () => [{type: 'Project', id: 'ID'}]
         }),
+        updateProject: builder.mutation<any, {body:FormData,id:number}>({
+            query: ({body,id}) => ({
+                url: `/api/project/${id}`,
+                method: Verb.Patch,
+                body,
+            }),
+            invalidatesTags: () => [{type: 'Project', id: 'ID'}]
+        }),
     }),
 });
 
-export const { useGetProjectsQuery ,useCreateProjectMutation} = projectSlice;
+export const { useGetProjectsQuery ,useCreateProjectMutation,useUpdateProjectMutation} = projectSlice;

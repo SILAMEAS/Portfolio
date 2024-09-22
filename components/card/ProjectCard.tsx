@@ -12,19 +12,17 @@ const ProjectCard = (props: ProjectDto) => {
         setFlipped(!flipped);
     };
   return (
-      <div className="flip-container transition-all" onClick={handleFlip}>
+      <div className="flip-container transition-all" >
           <div className={`flip-card ${flipped ? "flipped" : ""}`}>
               {/* Front of the card */}
-              <div className="flip-card-front animate-pulse">
-                  <ProjectFaceCard {...props}/>
-                  {/*<div onClick={handleFlip} className={'absolute top-[10px] right-[-15px]'}>{'description'}</div>*/}
+              <div className="flip-card-front ">
+                  <ProjectFaceCard {...props} onClick={handleFlip}/>
               </div>
 
               {/* Back of the card */}
               <div className="flip-card-back ">
-                  <ProjectBackCard {...props}/>
-                  {/*<div onClick={handleFlip} className={'absolute top-[10px] right-[-15px]'}><TbSwipe*/}
-                  {/*    className={'h-10 w-10'}/></div>*/}
+                  <ProjectBackCard {...props} onClick={handleFlip}/>
+
               </div>
           </div>
       </div>

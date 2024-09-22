@@ -4,6 +4,7 @@ interface ImageProjectEntity{
     format:string;
 }
 export interface ProjectDto{
+    id:number;
     title: string,
     description: string,
     link: string,
