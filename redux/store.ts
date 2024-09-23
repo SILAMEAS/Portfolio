@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './slices/counterSlice';
 import modalReducer from './slices/modalSlice';
 import {profileSlice} from "@/redux/feature/profileSlice";
-import {projectSlice} from "@/redux/feature/projectSlice"; // Example slice
+import {projectSlice} from "@/redux/feature/projectSlice";
+import {skillSlice} from "@/redux/feature/skillSlice"; // Example slice
 
 export const store = configureStore({
     reducer: {
@@ -10,9 +11,10 @@ export const store = configureStore({
         modal:modalReducer,
         [profileSlice.reducerPath]: profileSlice.reducer,
         [projectSlice.reducerPath]: projectSlice.reducer,
+        [skillSlice.reducerPath]: skillSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(profileSlice.middleware,projectSlice.middleware),
+        getDefaultMiddleware().concat(profileSlice.middleware,projectSlice.middleware,skillSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
