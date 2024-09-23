@@ -20,7 +20,7 @@ const Page = () => {
           <AddProjectCard/>
         </div>
         <div
-            className={cn(`h-[28rem] md:h-[50rem] lg:h-[30rem] xl:h-[50rem]`,'overflow-hidden overflow-y-auto scrollbar scrollbar-thumb-muted grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 px-5')}>
+            className={cn(`h-[28rem] md:h-[50rem] lg:h-[30rem] xl:h-[35rem]`,'overflow-hidden overflow-y-auto scrollbar scrollbar-thumb-muted grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 px-5')}>
           {(getProjects.isLoading || !getProjects.currentData) ? <div>loading...</div> :
               getProjects?.currentData?.map((project) => (
                   <ProjectCard
