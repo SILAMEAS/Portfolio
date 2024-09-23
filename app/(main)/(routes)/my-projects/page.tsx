@@ -16,7 +16,7 @@ const Page = () => {
         <p className={'text-red-600'}>{getProjects?.currentData?.length} projects</p>
         <AddProjectCard/>
       </div>
-      <div className=" w-full max-h-[70%] overflow-hidden overflow-y-auto scrollbar scrollbar-thumb-muted grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 px-5">
+      <div className=" w-full max-h-[60%] overflow-hidden overflow-y-auto scrollbar scrollbar-thumb-muted grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 px-5">
         {(getProjects.isLoading||!getProjects.currentData)?<div>loading...</div>:
           getProjects?.currentData?.map((project) => (
               <ProjectCard
