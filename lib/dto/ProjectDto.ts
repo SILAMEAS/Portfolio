@@ -1,4 +1,4 @@
-interface ImageProjectEntity{
+export interface ImageProjectEntity{
     public_id:string;
     url:string;
     format:string;

@@ -4,9 +4,45 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import {Autoplay} from "swiper/modules";
+import {useGetSkillQuery} from "@/redux/feature/skillSlice";
+import {onOpen} from "@/redux/slices/modalSlice";
+import {useAppDispatch} from "@/redux/hooks";
+import {Loading} from "@/components/Loading";
 import {SkillData} from "@/constants/constants";
 
 const Page = () => {
+  const skills=useGetSkillQuery({});
+  const dispatch=useAppDispatch();
+  const RenderSkillSwiper=({reverseDirection=false}:{reverseDirection:boolean})=>{
+    return  <Swiper
+        slidesPerView={5}
+        loop={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          reverseDirection:reverseDirection
+        }}
+        speed={5000}
+        modules={[Autoplay]}
+        className="max-w-[100%] "
+    >
+      {/*skills?.currentData?*/}
+      {SkillData.map((skill, index) => (
+          <SwiperSlide key={skill.name}>
+            <div className={'flex items-center justify-center h-[70px]  w-[70px] lg:h-[100px] lg:w-[100px] border p-[10px]'}
+                 // onClick={()=>dispatch(onOpen({ type: 'modify-skill', data: { skill } }))}
+            >
+              <Image
+                  src={skill.Image}
+                  alt={skill.name}
+                  width={80}
+                  height={80}
+              />
+            </div>
+          </SwiperSlide>
+      ))}
+    </Swiper>
+  }
   return (
     <div
       style={{ backgroundImage: "url(/bg-2.jpg)" }}
@@ -26,51 +62,13 @@ const Page = () => {
             Using the latest tech this world has to offer
           </p>
         </div>
-        <Swiper
-          slidesPerView={5}
-          loop={true}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
-          speed={5000}
-          modules={[Autoplay]}
-          className="max-w-[100%] "
-        >
-          {SkillData.map((skill, index) => (
-            <SwiperSlide key={index}>
-              <Image
-                src={skill.Image}
-                alt={skill.name}
-                width={skill.width}
-                height={skill.height}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <Swiper
-          slidesPerView={5}
-          loop={true}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-            reverseDirection: true
-          }}
-          speed={5000}
-          modules={[Autoplay]}
-          className="max-w-[80%]"
-        >
-          {SkillData.map((skill, index) => (
-            <SwiperSlide key={index}>
-              <Image
-                src={skill.Image}
-                alt={skill.name}
-                width={skill.width}
-                height={skill.height}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {
+          skills.isLoading?<Loading  textLoading={'loading skill ... '}/>:
+              <>
+                {RenderSkillSwiper({reverseDirection:false})}
+                {RenderSkillSwiper({reverseDirection:true})}
+              </>
+        }
       </div>
     </div>
   );

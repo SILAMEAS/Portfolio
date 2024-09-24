@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProfileDto } from "@/lib/dto/ProfileDto";
 import {ProjectDto} from "@/lib/dto/ProjectDto";
+import {SkillDto} from "@/lib/dto/SkillDto";
 
 // Define the types
-export type ModalType = "modify-profile" | "modify-project" | 'create-project'
+export type ModalType = "modify-profile" | "modify-project" | 'create-project'|'modify-skill'
 
 interface IData {
     profile?: ProfileDto;
     project?:ProjectDto;
+    skill?:SkillDto
 }
 
 interface ModalState {
