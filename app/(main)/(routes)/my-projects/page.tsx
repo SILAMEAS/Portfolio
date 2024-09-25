@@ -1,37 +1,30 @@
-"use client";
-
 import React from "react";
-import ProjectCard from "../../../../components/card/ProjectCard";
-import AddProjectCard from "../../../../components/card/add-project-card";
-import {useGetProjectsQuery} from "@/redux/feature/projectSlice";
-import {cn} from "@/lib/utils";
+import LayoutCardListProject from "@/components/layout/list-card-project";
 
 const Page = () => {
-  const getProjects=useGetProjectsQuery({});
-  const h=100;
-  return (
-    <div
-      style={{ backgroundImage: "url(/bg-3.jpg)" }}
-      className=" w-screen h-screen flex flex-col items-start justify-center bg-center bg-cover"
-    >
-      <div className={cn('w-full')}>
-        <div className={'mt-14 mb-4 flex self-end w-full px-5 items-center justify-between'}>
-          <p className={'text-red-600'}>{getProjects?.currentData?.length} projects</p>
-          <AddProjectCard/>
-        </div>
-        <div
-            className={cn(`h-[25rem] md:h-[50rem] lg:h-[30rem] xl:h-[35rem]`,'overflow-hidden overflow-y-auto scrollbar scrollbar-thumb-muted grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 px-5')}>
-          {(getProjects.isLoading || !getProjects.currentData) ? <div>loading...</div> :
-              getProjects?.currentData?.map((project) => (
-                  <ProjectCard
-                      key={project.link + project.title + project.image}
-                      {...project}
-                  />
-              ))}
 
+  return (
+      <div
+          style={{backgroundImage: "url(/bg-3.jpg)"}}
+          className="h-screen w-screen flex items-center justify-center bg-cover bg-center"
+      >
+        <div className="flex flex-col gap-20 max-w-[100%] text-center items-center">
+          <div className="flex flex-col items-center gap-4 hidden">
+            <h1 className="font-semibold text-white text-[20px] ">
+              Projects{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-red-500">
+              {" "}
+                &{" "}
+            </span>
+              Code
+            </h1>
+            <p className="text-gray-400 text-[20px]">
+              develop your self like technologies
+            </p>
+          </div>
+          <LayoutCardListProject/>
         </div>
       </div>
-    </div>
   );
 };
 
